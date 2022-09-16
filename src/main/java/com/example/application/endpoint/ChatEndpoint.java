@@ -1,6 +1,6 @@
 package com.example.application.endpoint;
 
-import com.example.application.model.Message;
+import com.example.application.dto.MessageDTO;
 import com.example.application.security.SecurityService;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import dev.hilla.Endpoint;
@@ -21,23 +21,23 @@ public class ChatEndpoint {
     @Autowired
     private SecurityService securityService;
 
-    private Many<Message> chatSink;
-    private Flux<Message> chat;
+    private Many<MessageDTO> chatSink;
+    private Flux<MessageDTO> chat;
 
     public ChatEndpoint() {
         chatSink = Sinks.many().multicast().directBestEffort();
         chat = chatSink.asFlux().replay(10).autoConnect();
     }
 
-    public @Nonnull Flux<@Nonnull Message> join() {
+    public @Nonnull Flux<@Nonnull MessageDTO> join() {
         return chat;
     }
 
-    public void send(Message message) {
-        message.setTime(ZonedDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
-        message.setUserName(securityService.getAuthenticatedUserUsername()); //TODO it should get User model fully
+    public void send(MessageDTO messageDTO) {
+        messageDTO.setTime(ZonedDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+        messageDTO.setUserName(securityService.getAuthenticatedUserUsername()); //TODO it should get User model fully
         chatSink.emitNext(
-                message,
+                messageDTO,
                 (signalType, emitResult) -> emitResult.equals(Sinks.EmitResult.FAIL_NON_SERIALIZED)
         );
     }

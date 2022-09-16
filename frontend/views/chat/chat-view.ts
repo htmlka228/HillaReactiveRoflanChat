@@ -3,7 +3,7 @@ import {customElement, state} from 'lit/decorators.js';
 import {View} from '../../views/view';
 import '@vaadin/vaadin-messages';
 import '@vaadin/vaadin-text-field';
-import Message from 'Frontend/generated/com/example/application/model/Message';
+import Message from 'Frontend/generated/com/example/application/dto/MessageDTO';
 import {ChatEndpoint, UserInfoEndpoint} from "Frontend/generated/endpoints";
 import {TextFieldChangeEvent} from "@vaadin/text-field";
 

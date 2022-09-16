@@ -4,16 +4,12 @@ import {View} from '../../views/view';
 import '@vaadin/vaadin-messages';
 import '@vaadin/vaadin-text-field';
 import Message from 'Frontend/generated/com/example/application/dto/MessageDTO';
-import {ChatEndpoint, UserInfoEndpoint} from "Frontend/generated/endpoints";
-import {TextFieldChangeEvent} from "@vaadin/text-field";
+import {ChatEndpoint} from "Frontend/generated/endpoints";
 
 @customElement('chat-view')
 export class ChatView extends View {
     @state()
     private messages: Message[] = [];
-
-    @state()
-    private username = '';
 
     render() {
         return html`
@@ -24,14 +20,9 @@ export class ChatView extends View {
             </header>
             <vaadin-message-list class="flex justify-end flex-grow" .items=${this.messages}></vaadin-message-list>
             <div class="flex p-s gap-s items-baseline">
-                <!-- <vaadin-text-field placeholder="Name" @change=${this.usernameChange}></vaadin-text-field> -->
                 <vaadin-message-input class="flex-grow" @submit=${this.submit}></vaadin-message-input>
             </div>
         `;
-    }
-
-    usernameChange(e: TextFieldChangeEvent) {
-        this.username = e.target.value;
     }
 
     submit(e: CustomEvent) {

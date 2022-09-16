@@ -1,7 +1,9 @@
 import { RouterLocation } from '@vaadin/router';
 import { makeAutoObservable } from 'mobx';
+import {UiStore} from "Frontend/stores/ui-store";
 
 export class AppStore {
+  uiStore = new UiStore();
   applicationName = 'hilla-chat';
 
   // The location, relative to the base path, e.g. "hello" when viewing "/hello"
@@ -31,3 +33,4 @@ export class AppStore {
 }
 
 export const appStore = new AppStore();
+export const uiStore = appStore.uiStore;

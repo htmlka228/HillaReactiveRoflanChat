@@ -6,8 +6,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Table;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -16,9 +17,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.Set;
-import java.util.UUID;
 
-@Table("roflan_user")
+@Document(collection = "roflan_user")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -28,7 +28,7 @@ public class User implements UserDetails {
     @Id
     @NotNull
     @Nonnull
-    private UUID uuid;
+    private ObjectId id;
 
     @NotBlank
     @Nonnull

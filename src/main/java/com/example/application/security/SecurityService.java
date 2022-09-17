@@ -7,7 +7,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.session.SessionRegistry;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +18,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class SecurityService {
     private final SessionRegistry sessionRegistry;
-    private final UserDetailsService userService;
+    private final UserService userService;
 
     public List<User> getAllAuthenticatedUsers() {
         return sessionRegistry.getAllPrincipals().stream()
@@ -43,7 +42,7 @@ public class SecurityService {
         SecurityContext context = SecurityContextHolder.getContext();
         Object principal = context.getAuthentication().getPrincipal();
         if (principal instanceof Jwt) {
-            return  ((Jwt) principal).getSubject();
+            return ((Jwt) principal).getSubject();
         }
 
         return StringUtils.EMPTY;
